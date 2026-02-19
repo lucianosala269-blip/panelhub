@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Sensibilidad FF 2026</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: #1a1a1a; 
+            color: white; 
+        }
+        .container { 
+            background: #2d2d2d; 
+            padding: 30px; 
+            border-radius: 15px; 
+        }
+        .input-group { 
+            margin: 15px 0; 
+        }
+        label { 
+            display: block; 
+            margin-bottom: 5px; 
+            font-weight: bold; 
+        }
+        select, input, button { 
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 8px; 
+            border: none; 
+            font-size: 16px; 
+        }
+        button { 
+            background: #ff4500; 
+            color: white; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        #resultado { 
+            margin-top: 25px; 
+            padding: 20px; 
+            background: #3d3d3d; 
+            border-radius: 10px; 
+        }
+        .valor { 
+            color: #4CAF50; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔫 GENERADOR FF 2026</h1>
+        
+        <div class="input-group">
+            <label>Tipo de dispositivo</label>
+            <select id="tipoDispositivo">
+                <option value="iphone">iPhone</option>
+                <option value="android">Android (General)</option>
+                <option value="motorola">Motorola</option>
+                <option value="samsung">Samsung</option>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="huawei">Huawei</option>
+                <option value="pc">PC (Emulador)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Modelo específico (ajusta valores)</label>
+            <select id="modeloDispositivo">
+                <option value="default">Selecciona modelo</option>
+                <option value="iphone15">iPhone 15/15 Pro</option>
+                <option value="iphone14">iPhone 14/14 Plus</option>
+                <option value="android_low">Bajo rendimiento (2-4GB RAM)</option>
+                <option value="android_medium">Medio rendimiento (4-8GB RAM)</option>
+                <option value="android_high">Alto rendimiento (8+GB RAM)</option>
+                <option value="moto_g">Moto G Series</option>
+                <option value="moto_edge">Moto Edge Series</option>
+                <option value="samsung_s26">Samsung Galaxy S26</option>
+                <option value="xiaomi_14">Xiaomi 14</option>
+                <option value="pc_bluestacks">PC - BlueStacks 5</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Posición del botón de disparo</label>
+            <select id="posicionDisparo">
+                <option value="derecho_abajo">Predeterminado (Derecho abajo)</option>
+                <option value="izquierdo_abajo">Izquierdo abajo</option>
+                <option value="derecho_medio">Derecho medio</option>
+                <option value="personalizado">Tamaño/personalizado</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Estilo de juego</label>
+            <select id="estiloJuego">
+                <option value="rush">Rush (Cerca/Mediana distancia)</option>
+                <option value="sniper">Francotirador (Larga distancia)</option>
+                <option value="support">Soporte (Mixto)</option>
+                <option value="competitivo">Competitivo (Torneos)</option>
+            </select>
+        </div>
+
+        <button onclick="generarSensibilidad()">GENERAR CONFIGURACIÓN</button>
+
+        <div id="resultado" style="display: none;">
+            <h3>📊 CONFIGURACIÓN OPTIMIZADA</h3>
+            <p>Sensibilidad General: <span class="valor" id="general"></span></p>
+            <p>Sensibilidad Mira: <span class="valor" id="mira"></span></p>
+            <p>Sensibilidad 2x: <span class="valor" id="doble"></span></p>
+            <p>Sensibilidad 4x: <span class="valor" id="cuadruple"></span></p>
+            <p>Sensibilidad 8x/AWM: <span class="valor" id="ocho"></span></p>
+            <p>Sensibilidad Visión Nocturna: <span class="valor" id="nocturna"></span></p>
+            <p><small>Nota: Prueba en entrenamiento y ajusta ±1-2 puntos según tu comodidad. Valores adaptados a la latencia y precisión de tu dispositivo 2026.</small></p>
+        </div>
+    </div>
+
+    <script>
+        function generarSensibilidad() {
+            const tipo = document.getElementById('tipoDispositivo').value;
+            const modelo = document.getElementById('modeloDispositivo').value;
+            const disparo = document.getElementById('posicionDisparo').value;
+            const estilo = document.getElementById('estiloJuego').value;
+
+            let baseGen = 0, baseMira = 0, ajusteDisp = 0;
+
+            switch(modelo) {
+                case "iphone15": baseGen = 45; baseMira = 38; break;
+                case "iphone14": baseGen = 43; baseMira = 36; break;
+                case "android_low": baseGen = 50; baseMira = 42; break;
+                case "android_medium": baseGen = 47; baseMira = 40; break;
+                case "android_high": baseGen = 44; baseMira = 37; break;
+                case "moto_g": baseGen = 48; baseMira = 41; break;
+                case "moto_edge": baseGen = 45; baseMira = 39; break;
+                case "samsung_s26": baseGen = 46; baseMira = 38; break;
+                case "xiaomi_14": baseGen = 45; baseMira = 37; break;
+                case "pc_bluestacks": baseGen = 32; baseMira = 28; break;
+                default: baseGen = 45; baseMira = 38;
+            }
+
+            switch(disparo) {
+                case "izquierdo_abajo": ajusteDisp = -2; break;
+                case "derecho_medio": ajusteDisp = +1; break;
+                case "personalizado": ajusteDisp = +2; break;
+                default: ajusteDisp = 0;
+            }
+
+            let gen, mira, doble, cuadruple, ocho, nocturna;
+            switch(estilo) {
+                case "rush":
+                    gen = baseGen + ajusteDisp + 3;
+                    mira = baseMira + ajusteDisp + 2;
+                    doble = 35 + ajusteDisp;
+                    cuadruple = 28 + ajusteDisp;
+                    ocho = 18 + ajusteDisp;
+                    nocturna = 40 + ajusteDisp;
+                    break;
+                case "sniper":
+                    gen = baseGen + ajusteDisp - 2;
+                    mira = baseMira + ajusteDisp - 3;
+                    doble = 25 + ajusteDisp;
+                    cuadruple = 18 + ajusteDisp;
+                    ocho = 10 + ajusteDisp;
+                    nocturna = 30 + ajusteDisp;
+                    break;
+                case "support":
+                    gen = baseGen + ajusteDisp;
+                    mira = baseMira + ajusteDisp;
+                    doble = 30 + ajusteDisp;
+                    cuadruple = 23 + ajusteDisp;
+                    ocho = 14 + ajusteDisp;
+                    nocturna = 35 + ajusteDisp;
+                    break;
+                case "competitivo":
+                    gen = baseGen + ajusteDisp + 1;
+                    mira = baseMira + ajusteDisp;
+                    doble = 32 + ajusteDisp;
+                    cuadruple = 25 + ajusteDisp;
+                    ocho = 16 + ajusteDisp;
+                    nocturna = 37 + ajusteDisp;
+                    break;
+            }
+
+            document.getElementById('general').textContent = gen;
+            document.getElementById('mira').textContent = mira;
+            document.getElementById('doble').textContent = doble;
+            document.getElementById('cuadruple').textContent = cuadruple;
+            document.getElementById('ocho').textContent = ocho;
+            document.getElementById('nocturna').textContent = nocturna;
+            document.getElementById('resultado').style.display = "block";
+        }
+    </script>
+</body>
+</html>
