@@ -3,150 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahorcado Pro</title>
-
+<title>Ahorcado</title>
 <style>
 body {
     margin: 0;
     font-family: Arial;
-    text-align: center;
     background: #111;
     color: white;
+    text-align: center;
 }
 
-h1 {
-    margin-top: 20px;
+#game {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 #word {
-    font-size: 30px;
+    font-size: 40px;
     letter-spacing: 10px;
-    margin: 20px;
+    margin-top: 20px;
 }
 
 #letters button {
     margin: 5px;
     padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
+    font-size: 18px;
 }
 
-#lifeBar {
-    width: 80%;
-    height: 20px;
-    background: #444;
-    margin: 20px auto;
-    border-radius: 10px;
-    overflow: hidden;
+#hangman {
+    font-size: 80px;
 }
 
-#life {
-    height: 100%;
-    width: 100%;
-    background: #00ff88;
-}
-
-#status {
-    margin-top: 20px;
+#restart {
+    padding: 15px;
     font-size: 20px;
+    margin: 20px;
 }
 </style>
-
 </head>
+
 <body>
 
-<h1>🎯 Juego del Ahorcado</h1>
-
-<div id="lifeBar">
-    <div id="life"></div>
+<div id="game">
+    <div id="hangman">😀</div>
+    <div id="word"></div>
+    <div id="letters"></div>
+    <button id="restart">Reiniciar</button>
 </div>
 
-<div id="word"></div>
-
-<div id="letters"></div>
-
-<div id="status"></div>
-
 <script>
-let words = ["casa","perro","gato","ventana","mesa","telefono","juego","computadora","cocina","limpieza"];
+const words = ["gato","perro","casa","auto","sol","luna","mesa","juego","codigo","python"];
 let selectedWord = "";
-let display = [];
-let lives = 3;
+let guessed = [];
+let lives = 10;
 
-// iniciar juego
-function startGame() {
+const hangmanStages = [
+    "😀","🙂","😐","😕","😟","😢","😫","😨","😵","💀"
+];
+
+function startGame(){
     selectedWord = words[Math.floor(Math.random()*words.length)];
-    display = Array(selectedWord.length).fill("_");
-    lives = 3;
-
+    guessed = [];
+    lives = 10;
     updateWord();
+    updateHangman();
     createLetters();
-    updateLife();
-    document.getElementById("status").innerText = "";
 }
 
-// mostrar palabra
-function updateWord() {
-    document.getElementById("word").innerText = display.join(" ");
+function updateWord(){
+    const display = selectedWord.split("").map(l => guessed.includes(l) ? l : "_").join(" ");
+    document.getElementById("word").textContent = display;
+
+    if(!display.includes("_")){
+        alert("¡Ganaste!");
+    }
 }
 
-// crear botones
-function createLetters() {
-    let lettersDiv = document.getElementById("letters");
+function updateHangman(){
+    document.getElementById("hangman").textContent = hangmanStages[10 - lives];
+}
+
+function createLetters(){
+    const lettersDiv = document.getElementById("letters");
     lettersDiv.innerHTML = "";
 
-    "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter => {
-        let btn = document.createElement("button");
-        btn.innerText = letter;
-
-        btn.onclick = () => guess(letter, btn);
-
+    "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter=>{
+        const btn = document.createElement("button");
+        btn.textContent = letter;
+        btn.onclick = () => guess(letter);
         lettersDiv.appendChild(btn);
     });
 }
 
-// adivinar
-function guess(letter, btn) {
-    btn.disabled = true;
+function guess(letter){
+    if(guessed.includes(letter)) return;
 
-    let correct = false;
+    guessed.push(letter);
 
-    for(let i=0;i<selectedWord.length;i++){
-        if(selectedWord[i] === letter){
-            display[i] = letter;
-            correct = true;
+    if(!selectedWord.includes(letter)){
+        lives--;
+        updateHangman();
+        if(lives <= 0){
+            alert("Perdiste 😢 Era: " + selectedWord);
         }
     }
 
-    if(!correct){
-        lives--;
-        updateLife();
-    }
-
     updateWord();
-    checkGame();
 }
 
-// vida visual
-function updateLife() {
-    let percent = (lives/3)*100;
-    document.getElementById("life").style.width = percent + "%";
-
-    if(lives == 2) document.getElementById("life").style.background = "yellow";
-    if(lives == 1) document.getElementById("life").style.background = "orange";
-    if(lives == 0) document.getElementById("life").style.background = "red";
-}
-
-// ganar/perder
-function checkGame() {
-    if(!display.includes("_")){
-        document.getElementById("status").innerText = "🎉 GANASTE";
-    }
-
-    if(lives === 0){
-        document.getElementById("status").innerText = "💀 PERDISTE - Era: " + selectedWord;
-    }
-}
+document.getElementById("restart").onclick = startGame;
 
 startGame();
 </script>
