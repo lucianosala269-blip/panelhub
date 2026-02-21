@@ -2,118 +2,159 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahorcado</title>
+<title>Ahorcado Full</title>
 <style>
 body {
-    margin: 0;
-    font-family: Arial;
-    background: #111;
-    color: white;
-    text-align: center;
+  margin: 0;
+  background: white;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  text-shadow: 2px 2px 4px black;
 }
 
 #game {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 #word {
-    font-size: 40px;
-    letter-spacing: 10px;
-    margin-top: 20px;
+  font-size: 40px;
+  letter-spacing: 10px;
+  text-shadow: 2px 2px 4px black;
 }
 
 #letters button {
-    margin: 5px;
-    padding: 10px;
-    font-size: 18px;
+  margin: 5px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#letters button:disabled {
+  background: gray;
 }
 
 #hangman {
-    font-size: 80px;
+  font-size: 60px;
+  text-shadow: 2px 2px 4px black;
 }
 
-#restart {
-    padding: 15px;
-    font-size: 20px;
-    margin: 20px;
+button.restart {
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 15px;
+  border: none;
+  background: black;
+  color: white;
+  cursor: pointer;
 }
 </style>
 </head>
-
 <body>
 
 <div id="game">
-    <div id="hangman">😀</div>
-    <div id="word"></div>
-    <div id="letters"></div>
-    <button id="restart">Reiniciar</button>
+  <h1>Ahorcado</h1>
+
+  <div id="hangman"></div>
+
+  <div id="word"></div>
+
+  <div id="letters"></div>
+
+  <button class="restart" onclick="startGame()">Empezar de vuelta</button>
 </div>
 
 <script>
-const words = ["gato","perro","casa","auto","sol","luna","mesa","juego","codigo","python"];
+const words = ["CASA", "PERRO", "GATO", "SILLA", "MESA", "VENTANA", "COLCHON", "TENEDOR", "VASO", "ESCOBA"];
+
 let selectedWord = "";
 let guessed = [];
-let lives = 10;
+let mistakes = 0;
 
-const hangmanStages = [
-    "😀","🙂","😐","😕","😟","😢","😫","😨","😵","💀"
+const parts = [
+  "😵", // cabeza final
+  "👁️", 
+  "👁️",
+  "👄",
+  "🧠",
+  "💪",
+  "🤚",
+  "💪",
+  "🤚",
+  "🦵",
+  "🦶",
+  "🦵",
+  "🦶"
 ];
 
-function startGame(){
-    selectedWord = words[Math.floor(Math.random()*words.length)];
-    guessed = [];
-    lives = 10;
-    updateWord();
-    updateHangman();
-    createLetters();
+function startGame() {
+  selectedWord = words[Math.floor(Math.random() * words.length)];
+  guessed = [];
+  mistakes = 0;
+  createLetters();
+  updateWord();
+  updateHangman();
 }
 
-function updateWord(){
-    const display = selectedWord.split("").map(l => guessed.includes(l) ? l : "_").join(" ");
-    document.getElementById("word").textContent = display;
-
-    if(!display.includes("_")){
-        alert("¡Ganaste!");
-    }
+function createLetters() {
+  const lettersDiv = document.getElementById("letters");
+  lettersDiv.innerHTML = "";
+  "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("").forEach(letter => {
+    const btn = document.createElement("button");
+    btn.textContent = letter;
+    btn.onclick = () => guess(letter, btn);
+    lettersDiv.appendChild(btn);
+  });
 }
 
-function updateHangman(){
-    document.getElementById("hangman").textContent = hangmanStages[10 - lives];
-}
+function guess(letter, btn) {
+  btn.disabled = true;
 
-function createLetters(){
-    const lettersDiv = document.getElementById("letters");
-    lettersDiv.innerHTML = "";
-
-    "abcdefghijklmnopqrstuvwxyz".split("").forEach(letter=>{
-        const btn = document.createElement("button");
-        btn.textContent = letter;
-        btn.onclick = () => guess(letter);
-        lettersDiv.appendChild(btn);
-    });
-}
-
-function guess(letter){
-    if(guessed.includes(letter)) return;
-
+  if (selectedWord.includes(letter)) {
     guessed.push(letter);
+  } else {
+    mistakes++;
+  }
 
-    if(!selectedWord.includes(letter)){
-        lives--;
-        updateHangman();
-        if(lives <= 0){
-            alert("Perdiste 😢 Era: " + selectedWord);
-        }
-    }
-
-    updateWord();
+  updateWord();
+  updateHangman();
+  checkGame();
 }
 
-document.getElementById("restart").onclick = startGame;
+function updateWord() {
+  const wordDiv = document.getElementById("word");
+  wordDiv.textContent = selectedWord
+    .split("")
+    .map(l => guessed.includes(l) ? l : "_")
+    .join(" ");
+}
+
+function updateHangman() {
+  const hangmanDiv = document.getElementById("hangman");
+  hangmanDiv.textContent = parts.slice(0, mistakes).join(" ");
+}
+
+function checkGame() {
+  if (mistakes >= parts.length) {
+    alert("Perdiste empieza de nuevo");
+    startGame();
+  }
+
+  if (selectedWord.split("").every(l => guessed.includes(l))) {
+    alert("Ganaste 🎉");
+    startGame();
+  }
+}
 
 startGame();
 </script>
