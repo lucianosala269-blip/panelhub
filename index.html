@@ -1,153 +1,202 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartBottle Pro</title>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            background: #f5f5f5;
-            color: #333;
-        }
-        header {
-            background: #ffe600;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #111;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        .left, .right {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .left {
-            flex: 2;
-        }
-        .right {
-            flex: 1;
-            min-width: 280px;
-        }
-        .product-img {
-            width: 100%;
-            border-radius: 8px;
-        }
-        h1, h2 {
-            color: #111;
-        }
-        .price {
-            font-size: 32px;
-            color: #00a650;
-            font-weight: bold;
-        }
-        .btn {
-            width: 100%;
-            padding: 15px;
-            background: #3483fa;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .btn:hover {
-            background: #2968c8;
-        }
-        .section {
-            margin-top: 30px;
-        }
-        .faq, .reviews {
-            margin-top: 40px;
-        }
-        .review {
-            border-top: 1px solid #ddd;
-            padding: 15px 0;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #fff;
-            color: #777;
-            margin-top: 40px;
-            font-size: 14px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda Hogar Total</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ebebeb;
+}
+
+/* HEADER */
+header {
+    background: #ffe600;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* CONTENEDOR */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* PRODUCTO */
+.product {
+    background: white;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+/* IMAGEN */
+.product img {
+    width: 200px;
+    border-radius: 10px;
+}
+
+/* INFO */
+.info {
+    flex: 1;
+}
+
+/* PRECIO */
+.price {
+    font-size: 24px;
+    color: #00a650;
+    font-weight: bold;
+}
+
+/* BOTÓN */
+.btn {
+    padding: 12px 20px;
+    background: #3483fa;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: #2968c8;
+}
+
+/* SECCIONES */
+.section-title {
+    font-size: 26px;
+    margin: 30px 0 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    .product {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .product img {
+        width: 100%;
+    }
+}
+</style>
+
 </head>
 <body>
 
 <header>
-    🛒 SmartBottle Pro - Tu Aliada en Hidrataci\u00f3n
+🛒 Hogar Total - Tienda Online
 </header>
 
 <div class="container">
-    <!-- Sección Izquierda -->
-    <div class="left">
-        <h1>SmartBottle Pro</h1>
-        <img src="https://via.placeholder.com/600x400" class="product-img">
-        
-        <div class="section">
-            <h2>Descripción</h2>
-            <p>SmartBottle Pro es la botella inteligente que transforma tu rutina. Con recordatorios inteligentes y una app sincronizada, te aseguras de estar siempre hidratado.</p>
-        </div>
-        
-        <div class="section">
-            <h2>Características</h2>
-            <ul>
-                <li>Sensor de agua inteligente</li>
-                <li>Conexión Bluetooth con tu smartphone</li>
-                <li>Recordatorios automáticos</li>
-                <li>Batería de larga duración (10 días)</li>
-                <li>Diseño elegante y compacto</li>
-            </ul>
-        </div>
-        
-        <div class="section reviews">
-            <h2>Opiniones</h2>
-            <div class="review">
-                ⭐⭐⭐⭐⭐ “Muy práctica, no olvido tomar agua” - Ana
-            </div>
-            <div class="review">
-                ⭐⭐⭐⭐ “Buena calidad, me gusta su diseño” - Pedro
-            </div>
-            <div class="review">
-                ⭐⭐⭐⭐⭐ “Recomendada al 100%” - Lucia
-            </div>
-        </div>
 
-        <div class="section faq">
-            <h2>Preguntas Frecuentes</h2>
-            <p><strong>¿Tiene garantía?</strong><br>
-            Sí, garantía de 30 días (ficticio).</p>
-            <p><strong>¿Puedo comprar en cuotas?</strong><br>
-            Sí, pero es solo un ejemplo ficticio.</p>
-            <p><strong>¿Es un producto real?</strong><br>
-            No, esta página es solo una simulación de tienda.</p>
-        </div>
-    </div>
+<h2 class="section-title">🏠 Productos para el hogar</h2>
 
-    <!-- Sección Derecha -->
-    <div class="right">
-        <p class="price">$89 USD</p>
-        <p>Envío gratis a todo el país</p>
-        <button class="btn" onclick="mensaje()">Comprar ahora</button>
-        <button class="btn" onclick="mensaje()">Agregar al carrito</button>
-        <div class="section">
-            <p><strong>Vendido por:</strong> Tienda Ficticia</p>
-            <p><strong>Garantía:</strong> 30 días</p>
-        </div>
-    </div>
+<!-- PRODUCTO 1 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Cama Moderna</h3>
+<p>Cama cómoda y elegante para tu dormitorio.</p>
+<div class="price">$250 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
 </div>
 
-<
+<!-- PRODUCTO 2 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Colchón Premium</h3>
+<p>Máximo confort para descansar mejor.</p>
+<div class="price">$180 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 3 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Ventana de Aluminio</h3>
+<p>Resistente y moderna para tu hogar.</p>
+<div class="price">$120 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 4 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Set de Vasos</h3>
+<p>Juego de 6 vasos elegantes.</p>
+<div class="price">$20 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 5 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Tenedores de Acero</h3>
+<p>Set de cubiertos resistentes.</p>
+<div class="price">$15 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 6 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Kit de Limpieza</h3>
+<p>Incluye detergente, trapo y más.</p>
+<div class="price">$30 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 7 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Sofá 3 Cuerpos</h3>
+<p>Ideal para tu living.</p>
+<div class="price">$300 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
+</div>
+
+<!-- PRODUCTO 8 -->
+<div class="product">
+<img src="https://via.placeholder.com/200">
+<div class="info">
+<h3>Mesa de Comedor</h3>
+<p>Madera resistente para toda la familia.</p>
+<div class="price">$220 USD</div>
+<button class="btn" onclick="comprar()">Comprar</button>
+</div>
+</div>
+
+</div>
+
+<script>
+function comprar() {
+    alert("Esta tienda es ficticia. No se realizan compras reales.");
+}
+</script>
+
+</body>
+</html>
