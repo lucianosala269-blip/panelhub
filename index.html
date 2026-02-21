@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             color: white;
-            overflow: hidden;
+            overflow-y: auto;
             background-color: #000000;
             position: relative;
         }
@@ -50,13 +50,29 @@
         }
 
         button {
-            background: #00ff00;
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 8px;
+    background: #00ff00;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* EFECTO HOVER */
+button:hover {
+    background: #ff0000;
+    color: white;
+    box-shadow: 0 0 15px red, 0 0 30px red;
+    transform: scale(1.1);
+}
+
+/* EFECTO AL HACER CLICK */
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 10px #ff0000;
+};
         }
 
         a {
