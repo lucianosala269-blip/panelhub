@@ -1,193 +1,117 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>ARCHIVOS TODO ROJO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartBottle Pro</title>
     <style>
         body {
-            margin: 0;
-            height: 100vh;
             font-family: Arial, sans-serif;
-            text-align: center;
+            margin: 0;
+            background: #f9f9f9;
+            color: #333;
+        }
+        header {
+            background: #ff6f61;
             color: white;
-            overflow-y: auto;
-            background-color: #000000;
-            position: relative;
+            padding: 20px 0;
+            text-align: center;
         }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: url('logoFF.png') repeat;
-            opacity: 0.1;
-            background-size: 200px 200px;
-            animation: moverLogo 20s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes moverLogo {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(100px, 100px); }
-            100% { transform: translate(0, 0); }
-        }
-
-        h1 {
-            color: #ff0000;
-            margin-top: 40px;
-        }
-
-        .panel {
-            background: rgba(0,0,0,0.7);
+        .container {
+            width: 90%;
+            max-width: 1000px;
             margin: 30px auto;
+            background: white;
             padding: 20px;
-            width: 350px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px #00ff00;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        button {
-    background: #00ff00;
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-/* EFECTO HOVER */
-button:hover {
-    background: #ff0000;
-    color: white;
-    box-shadow: 0 0 15px red, 0 0 30px red;
-    transform: scale(1.1);
-}
-
-/* EFECTO AL HACER CLICK */
-button:active {
-    transform: scale(0.95);
-    box-shadow: 0 0 10px #ff0000;
-};
+        h1, h2 {
+            color: #ff6f61;
         }
-
-        a {
-            color: #00ff00;
-            word-break: break-all;
+        .product-img {
+            width: 100%;
+            max-width: 400px;
+            display: block;
+            margin: 20px auto;
         }
-
-        .password {
-            margin-top: 15px;
-            font-weight: bold;
-            color: yellow;
+        .btn {
+            display: inline-block;
+            background: #ff6f61;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #e65550;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .testimonial {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #ff6f61;
+        }
+        .faq {
+            margin-top: 20px;
+        }
+        .faq h3 {
+            color: #ff6f61;
         }
     </style>
 </head>
-
 <body>
-
-<h1>🔥 ARCHIVOS TODO ROJO 🔥</h1>
-
-<!-- PRIMER ARCHIVO -->
-<div class="panel">
-    <h3>HOLOGRAMA + REGEDIT TODO ROJO</h3>
-
-    <a href="https://www.mediafire.com/file/fgp4hod53xgkphc/%25E2%259C%2585%25EF%25B8%258F_HOLOGRAMA_%252B_REGEDIT_%25F0%259F%2591%25BF_TODO_ROJO_%25F0%259F%2592%25AF_PARA_TODAS_LAS_REGIONES_%25F0%259F%2592%25AB_SIN_BAN_NAGI_MODZ_OFC_%25F0%259F%2597%25BF%25F0%259F%2587%25A8%25F0%259F%2587%25BA.7z/file" target="_blank">
-        <button>DESCARGAR</button>
-    </a>
-
-    <p>
-        <a href="https://www.mediafire.com/file/fgp4hod53xgkphc/%25E2%259C%2585%25EF%25B8%258F_HOLOGRAMA_%252B_REGEDIT_%25F0%259F%2591%25BF_TODO_ROJO_%25F0%259F%2592%25AF_PARA_TODAS_LAS_REGIONES_%25F0%259F%2592%25AB_SIN_BAN_NAGI_MODZ_OFC_%25F0%259F%2597%25BF%25F0%259F%2587%25A8%25F0%259F%2587%25BA.7z/file" target="_blank">
-            🔗 Link directo MediaFire
-        </a>
-    </p>
-
-    <div class="password">
-        🔑 CONTRASEÑA: HOLOREGV2NAGI
+    <header>
+        <h1>SmartBottle Pro</h1>
+        <p>La botella inteligente que revoluciona tu hidratación</p>
+    </header>
+    <div class="container">
+        <div class="section">
+            <h2>Sobre SmartBottle Pro</h2>
+            <img src="https://via.placeholder.com/400" alt="SmartBottle Pro" class="product-img">
+            <p>SmartBottle Pro es la botella inteligente que te ayuda a mantenerte hidratado, monitoreando tu ingesta de agua y recordándote cuándo beber. Con sensores avanzados y conectividad a tu smartphone, es la aliada perfecta para tu salud.</p>
+        </div>
+        <div class="section">
+            <h2>Beneficios Clave</h2>
+            <ul>
+                <li>Monitoreo de ingesta diaria de agua</li>
+                <li>Notificaciones personalizadas en tu móvil</li>
+                <li>Material resistente y elegante</li>
+                <li>Batería de larga duración (hasta 10 días)</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Precio y Detalles</h2>
+            <p><strong>Precio: $89 USD</strong></p>
+            <p>Incluye: Botella, cargador USB, guía digital y acceso a la app.</p>
+            <a href="#" class="btn" onclick="alert('Lo sentimos, esta página y producto son ficticios. No hay compra disponible.')">COMPRAR AHORA</a>
+        </div>
+        <div class="section">
+            <h2>Testimonios</h2>
+            <div class="testimonial">
+                <p><em>\"Desde que uso SmartBottle Pro, me siento más energizado y nunca olvido beber agua.\"</em> - Laura G.</p>
+            </div>
+            <div class="testimonial">
+                <p><em>\"Una innovación que cambió mi rutina. ¡No salgo de casa sin ella!\"</em> - Carlos M.</p>
+            </div>
+        </div>
+        <div class="section faq">
+            <h2>Preguntas Frecuentes</h2>
+            <div>
+                <h3>¿La botella está disponible ya?</h3>
+                <p>S\u00ed, en este momento está disponible solo como ejemplo ficticio.</p>
+            </div>
+            <div>
+                <h3>¿Puedo pagar con Mercado Pago?</h3>
+                <p>No, esta es una página ficticia y no se realiza ninguna transacción real.</p>
+            </div>
+        </div>
     </div>
-</div>
-
-<!-- SEGUNDO ARCHIVO -->
-<div class="panel">
-    <h3>HOLOGRAMA + FAKE LAG + AIMBOT</h3>
-
-    <a href="https://www.mediafire.com/file/8whkpzfb094c32k/HOLOGRAMA+FAKE+LAG+AIMBOT%F0%9F%94%A5%F0%9F%98%88.zip/file" target="_blank">
-        <button>DESCARGAR</button>
-    </a>
-
-    <p>
-        <a href="https://www.mediafire.com/file/8whkpzfb094c32k/HOLOGRAMA+FAKE+LAG+AIMBOT%F0%9F%94%A5%F0%9F%98%88.zip/file" target="_blank">
-            🔗 Link directo MediaFire
-        </a>
-    </p>
-
-    <div class="password">
-        🔑 CONTRASEÑA: COMBO_COMPLETO_L4DZ
-    </div>
-</div>
-
-<!-- TERCER ARCHIVO -->
-<div class="panel">
-    <h3>*_KLK MI GENTE LES TRAIGO ESTE HERMOSO AIMBOT OBB_
-
-Crédito 💳: N REAL OFC 
-
-COMPARTAN Y PRUEBEN
-
- Aquí les dejo el AIMBOT OBB el archivo se pega en obb de de todos modos al extraer el archivo 📂 hay un tutorial de instalación 
-Les traigo las 2 por qué casi están parejos en las votaciones ❤️☑️</h3>
-
-    <a href="https://www.mediafire.com/file/1jwoopc4d71wrm8/OBB_98%25F0%259F%2591%25A3%25F0%259F%258E%25AE.zip/file target="_blank">
-        <button>DESCARGAR</button>
-    </a>
-
-    <p>
-        <a href=https://www.mediafire.com/file/0fidywcvcwd3zxv/%25F0%259D%2590%2584%25F0%259D%2590%25A6%25F0%259D%2590%259E%25F0%259D%2590%25AB%25F0%259D%2590%259A%25F0%259D%2590%25A5%25F0%259D%2590%259D_%252B_%25F0%259D%2590%25B0%25F0%259D%2590%25A1%25F0%259D%2590%25A2%25F0%259D%2590%25AD%25F0%259D%2590%259E.apk/file target="_blank">
-            🔗 Link directo MediaFire
-        </a>
-    </p>
-</div>
-
-<!-- CUARTO ARCHIVO -->
-<div class="panel">
-    <h3>ARCHIVO 4</h3>
-
-    <a href=https://www.mediafire.com/file/x4v9f75rx8op0yg/MOD_MENU_XIT_MODZ_APK_MOD_ATUALIZADO_BY_EMERSOR_MODDER_BYPASS.7z/file" target="_blank">
-        <button>DESCARGAR</button>
-    </a>
-
-    <p>
-        <a href=https://www.mediafire.com/file/vgxu91swge1zbfn/LAILTON_FF_V25.7z/file?dkey=i8xbgq4aq15&r=48&dkey=vgxu91swge1zbfn target="_blank">
-            🔗 Link directo MediaFire
-        </a>
-    </p>
-</div>
-
-<!-- QUINTO ARCHIVO -->
-<div class="panel">
-    <h3>ARCHIVO 5</h3>
-
-    <a href=_*🗣️𝗣𝗔𝗡𝗘𝗟 𝗔𝗨𝗧𝗢 𝗔𝗣𝗨𝗡𝗧𝗔𝗗𝗢 𝗧𝗛𝗘 𝗞𝗜𝗡𝗚 𝗖𝗛𝗘𝗔𝗧𝗦 𝗙𝗨𝗟𝗟 𝗩𝟮𝟬𝟯👾*_
-*https://www.mediafire.com/file/9vxe65e9wpyls4t/PANEL+AUTO+APUNTADO+L4DZ+OFC%F0%9F%98%B1%F0%9F%94%A5.apks/file*
-
-_*🌐SITIO PARA QUE GENEREN SUS KEYS DE IGUAL FORMA LO PUEDEN HACER DESDE EL JUEGO DANDOLE EN GET KEY🌐*_
-*https://submais.com/p/?vsl=6fPOicv3J5T&i=1&t=6341771601920215213&utm_source=634_submais*
-
-_*📳VPN POR SI NO TE DEJA INICIAR SESIÓN📳*_
-https://www.mediafire.com/file/2ivrb38ebpetb00/eEagle_VPN_v2.10.3_%2528Premium%2529.apk/file" target="_blank">
-        <button>DESCARGAR</button>
-    </a>
-
-    <p>
-        <a href="PEGAR_LINK_AQUI" target="_blank">
-            🔗 Link directo MediaFire
-        </a>
-    </p>
-</div>
-
-</body>
-</html>
+    <footer style
