@@ -2,22 +2,18 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Ahorcado Full</title>
+<title>Ahorcado Stickman</title>
+
 <style>
 body {
   margin: 0;
   background: white;
-  font-family: Arial, sans-serif;
-  color: white;
+  font-family: Arial;
   text-align: center;
-}
-
-h1 {
-  text-shadow: 2px 2px 4px black;
+  color: black;
 }
 
 #game {
-  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,16 +21,71 @@ h1 {
   align-items: center;
 }
 
+/* MUÑECO */
+#hangman {
+  position: relative;
+  width: 200px;
+  height: 300px;
+}
+
+/* partes del cuerpo */
+.part {
+  position: absolute;
+  background: black;
+}
+
+.head {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 0;
+  left: 75px;
+}
+
+.body {
+  width: 10px;
+  height: 100px;
+  top: 50px;
+  left: 95px;
+}
+
+.armL {
+  width: 60px;
+  height: 10px;
+  top: 70px;
+  left: 35px;
+}
+
+.armR {
+  width: 60px;
+  height: 10px;
+  top: 70px;
+  left: 105px;
+}
+
+.legL {
+  width: 10px;
+  height: 70px;
+  top: 150px;
+  left: 80px;
+}
+
+.legR {
+  width: 10px;
+  height: 70px;
+  top: 150px;
+  left: 110px;
+}
+
 #word {
   font-size: 40px;
   letter-spacing: 10px;
-  text-shadow: 2px 2px 4px black;
 }
 
 #letters button {
   margin: 5px;
   padding: 10px;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
@@ -44,15 +95,10 @@ h1 {
   background: gray;
 }
 
-#hangman {
-  font-size: 60px;
-  text-shadow: 2px 2px 4px black;
-}
-
-button.restart {
-  padding: 15px 30px;
+#restart {
+  padding: 15px 25px;
   font-size: 18px;
-  border-radius: 15px;
+  border-radius: 10px;
   border: none;
   background: black;
   color: white;
@@ -60,55 +106,51 @@ button.restart {
 }
 </style>
 </head>
+
 <body>
 
 <div id="game">
-  <h1>Ahorcado</h1>
 
-  <div id="hangman"></div>
+<div id="hangman">
+  <div class="part head"></div>
+  <div class="part body"></div>
+  <div class="part armL"></div>
+  <div class="part armR"></div>
+  <div class="part legL"></div>
+  <div class="part legR"></div>
+</div>
 
-  <div id="word"></div>
+<div id="word"></div>
+<div id="letters"></div>
 
-  <div id="letters"></div>
+<button id="restart" onclick="startGame()">Reiniciar</button>
 
-  <button class="restart" onclick="startGame()">Empezar de vuelta</button>
 </div>
 
 <script>
-const words = ["CASA", "PERRO", "GATO", "SILLA", "MESA", "VENTANA", "COLCHON", "TENEDOR", "VASO", "ESCOBA"];
+const words = ["CASA","PERRO","GATO","SILLA","MESA","VENTANA","COLCHON","TENEDOR","VASO","ESCOBA"];
 
 let selectedWord = "";
 let guessed = [];
 let mistakes = 0;
 
-const parts = [
-  "😵", // cabeza final
-  "👁️", 
-  "👁️",
-  "👄",
-  "🧠",
-  "💪",
-  "🤚",
-  "💪",
-  "🤚",
-  "🦵",
-  "🦶",
-  "🦵",
-  "🦶"
-];
+const bodyParts = ["head","body","armL","armR","legL","legR"];
 
 function startGame() {
   selectedWord = words[Math.floor(Math.random() * words.length)];
   guessed = [];
   mistakes = 0;
+
+  document.querySelectorAll(".part").forEach(p => p.style.display = "block");
+
   createLetters();
   updateWord();
-  updateHangman();
 }
 
 function createLetters() {
   const lettersDiv = document.getElementById("letters");
   lettersDiv.innerHTML = "";
+
   "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("").forEach(letter => {
     const btn = document.createElement("button");
     btn.textContent = letter;
@@ -123,12 +165,18 @@ function guess(letter, btn) {
   if (selectedWord.includes(letter)) {
     guessed.push(letter);
   } else {
-    mistakes++;
+    removePart();
   }
 
   updateWord();
-  updateHangman();
   checkGame();
+}
+
+function removePart() {
+  if (mistakes < bodyParts.length) {
+    document.querySelector("." + bodyParts[mistakes]).style.display = "none";
+    mistakes++;
+  }
 }
 
 function updateWord() {
@@ -139,13 +187,8 @@ function updateWord() {
     .join(" ");
 }
 
-function updateHangman() {
-  const hangmanDiv = document.getElementById("hangman");
-  hangmanDiv.textContent = parts.slice(0, mistakes).join(" ");
-}
-
 function checkGame() {
-  if (mistakes >= parts.length) {
+  if (mistakes === bodyParts.length) {
     alert("Perdiste empieza de nuevo");
     startGame();
   }
