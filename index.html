@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Test de Amistad 💙</title>
+<title>¿Me conocés bien? 🔥</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
   color: white;
   text-align: center;
 }
@@ -21,7 +21,7 @@ body {
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 35px;
 }
 
 .question {
@@ -36,7 +36,7 @@ button {
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 
 button:hover {
@@ -53,38 +53,64 @@ button:hover {
 <body>
 
 <div id="game">
-  <h1>💙 Test de Amistad 💙</h1>
+  <h1>🔥 ¿Me conocés bien? 🔥</h1>
   <div class="question" id="question"></div>
   <div id="answers"></div>
   <div id="result"></div>
 </div>
 
 <script>
+
 const quiz = [
   {
-    q: "¿Sabe cuál es tu comida favorita?",
-    a: ["Sí", "Más o menos", "No"],
-    points: [2,1,0]
+    q: "¿Cuál es mi color favorito?",
+    a: ["Rojo", "Negro", "Azul"],
+    correcta: 1
   },
   {
-    q: "¿Te apoya cuando estás mal?",
-    a: ["Siempre", "A veces", "Nunca"],
-    points: [2,1,0]
+    q: "¿Qué me gusta hacer más?",
+    a: ["Salir", "Programar", "Dormir"],
+    correcta: 1
   },
   {
-    q: "¿Pueden reírse juntos fácil?",
-    a: ["Sí mucho", "Un poco", "Casi no"],
-    points: [2,1,0]
+    q: "¿Mi comida favorita?",
+    a: ["Pizza", "Pastel de papa", "Hamburguesa"],
+    correcta: 1
   },
   {
-    q: "¿Confías en esa persona?",
-    a: ["Mucho", "Algo", "Nada"],
-    points: [2,1,0]
+    q: "¿Qué prefiero?",
+    a: ["Salir", "Programar", "Deporte"],
+    correcta: 1
   },
   {
-    q: "¿Esa persona te escucha?",
-    a: ["Siempre", "A veces", "Nunca"],
-    points: [2,1,0]
+    q: "¿Qué me gusta más?",
+    a: ["Videojuegos", "Música y películas", "Deporte"],
+    correcta: 1
+  },
+  {
+    q: "¿Mi bebida favorita?",
+    a: ["Agua", "Coca Cola", "Jugo"],
+    correcta: 1
+  },
+  {
+    q: "¿Tengo hobby?",
+    a: ["Fútbol", "Ninguno", "Dibujar"],
+    correcta: 1
+  },
+  {
+    q: "¿Mi lugar favorito?",
+    a: ["Buenos Aires", "Mendoza", "Chile"],
+    correcta: 1
+  },
+  {
+    q: "¿Qué me hace reír?",
+    a: ["Series", "Videos de TikTok", "Juegos"],
+    correcta: 1
+  },
+  {
+    q: "¿Qué es lo más importante para mí?",
+    a: ["Dinero", "Familia", "Fama"],
+    correcta: 1
   }
 ];
 
@@ -101,13 +127,16 @@ function loadQuestion() {
   q.a.forEach((ans, index) => {
     const btn = document.createElement("button");
     btn.textContent = ans;
-    btn.onclick = () => answer(index);
+    btn.onclick = () => check(index);
     answersDiv.appendChild(btn);
   });
 }
 
-function answer(index) {
-  score += quiz[current].points[index];
+function check(index) {
+  if (index === quiz[current].correcta) {
+    score++;
+  }
+
   current++;
 
   if (current < quiz.length) {
@@ -121,23 +150,24 @@ function showResult() {
   document.getElementById("question").textContent = "";
   document.getElementById("answers").innerHTML = "";
 
-  let message = "";
+  let msg = "";
 
-  if (score >= 9) {
-    message = "💎 Mejor amigo/a REAL";
-  } else if (score >= 6) {
-    message = "🙂 Buen amigo/a";
-  } else if (score >= 3) {
-    message = "😐 Amistad normal";
+  if (score === quiz.length) {
+    msg = "💎 SOS MI MEJOR AMIGO";
+  } else if (score >= 7) {
+    msg = "😎 ME CONOCÉS MUY BIEN";
+  } else if (score >= 4) {
+    msg = "🙂 ME CONOCÉS UN POCO";
   } else {
-    message = "😬 No es tan amigo/a...";
+    msg = "😅 TENÉS QUE CONOCERME MÁS";
   }
 
   document.getElementById("result").textContent =
-    message + " (" + score + " puntos)";
+    msg + " (" + score + "/10)";
 }
 
 loadQuestion();
+
 </script>
 
 </body>
