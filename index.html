@@ -2,107 +2,50 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Ahorcado Stickman</title>
+<title>Test de Amistad 💙</title>
 
 <style>
 body {
   margin: 0;
-  background: white;
   font-family: Arial;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
   text-align: center;
-  color: black;
 }
 
 #game {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
 }
 
-/* MUÑECO */
-#hangman {
-  position: relative;
-  width: 200px;
-  height: 300px;
-}
-
-/* partes del cuerpo */
-.part {
-  position: absolute;
-  background: black;
-}
-
-.head {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  top: 0;
-  left: 75px;
-}
-
-.body {
-  width: 10px;
-  height: 100px;
-  top: 50px;
-  left: 95px;
-}
-
-.armL {
-  width: 60px;
-  height: 10px;
-  top: 70px;
-  left: 35px;
-}
-
-.armR {
-  width: 60px;
-  height: 10px;
-  top: 70px;
-  left: 105px;
-}
-
-.legL {
-  width: 10px;
-  height: 70px;
-  top: 150px;
-  left: 80px;
-}
-
-.legR {
-  width: 10px;
-  height: 70px;
-  top: 150px;
-  left: 110px;
-}
-
-#word {
+h1 {
   font-size: 40px;
-  letter-spacing: 10px;
 }
 
-#letters button {
-  margin: 5px;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
+.question {
+  font-size: 24px;
+  margin: 20px;
 }
 
-#letters button:disabled {
-  background: gray;
-}
-
-#restart {
+button {
   padding: 15px 25px;
+  margin: 10px;
   font-size: 18px;
-  border-radius: 10px;
   border: none;
-  background: black;
-  color: white;
+  border-radius: 12px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+#result {
+  font-size: 28px;
+  margin-top: 20px;
 }
 </style>
 </head>
@@ -110,96 +53,91 @@ body {
 <body>
 
 <div id="game">
-
-<div id="hangman">
-  <div class="part head"></div>
-  <div class="part body"></div>
-  <div class="part armL"></div>
-  <div class="part armR"></div>
-  <div class="part legL"></div>
-  <div class="part legR"></div>
-</div>
-
-<div id="word"></div>
-<div id="letters"></div>
-
-<button id="restart" onclick="startGame()">Reiniciar</button>
-
+  <h1>💙 Test de Amistad 💙</h1>
+  <div class="question" id="question"></div>
+  <div id="answers"></div>
+  <div id="result"></div>
 </div>
 
 <script>
-const words = ["CASA","PERRO","GATO","SILLA","MESA","VENTANA","COLCHON","TENEDOR","VASO","ESCOBA"];
+const quiz = [
+  {
+    q: "¿Sabe cuál es tu comida favorita?",
+    a: ["Sí", "Más o menos", "No"],
+    points: [2,1,0]
+  },
+  {
+    q: "¿Te apoya cuando estás mal?",
+    a: ["Siempre", "A veces", "Nunca"],
+    points: [2,1,0]
+  },
+  {
+    q: "¿Pueden reírse juntos fácil?",
+    a: ["Sí mucho", "Un poco", "Casi no"],
+    points: [2,1,0]
+  },
+  {
+    q: "¿Confías en esa persona?",
+    a: ["Mucho", "Algo", "Nada"],
+    points: [2,1,0]
+  },
+  {
+    q: "¿Esa persona te escucha?",
+    a: ["Siempre", "A veces", "Nunca"],
+    points: [2,1,0]
+  }
+];
 
-let selectedWord = "";
-let guessed = [];
-let mistakes = 0;
+let current = 0;
+let score = 0;
 
-const bodyParts = ["head","body","armL","armR","legL","legR"];
+function loadQuestion() {
+  const q = quiz[current];
+  document.getElementById("question").textContent = q.q;
 
-function startGame() {
-  selectedWord = words[Math.floor(Math.random() * words.length)];
-  guessed = [];
-  mistakes = 0;
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
 
-  document.querySelectorAll(".part").forEach(p => p.style.display = "block");
-
-  createLetters();
-  updateWord();
-}
-
-function createLetters() {
-  const lettersDiv = document.getElementById("letters");
-  lettersDiv.innerHTML = "";
-
-  "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("").forEach(letter => {
+  q.a.forEach((ans, index) => {
     const btn = document.createElement("button");
-    btn.textContent = letter;
-    btn.onclick = () => guess(letter, btn);
-    lettersDiv.appendChild(btn);
+    btn.textContent = ans;
+    btn.onclick = () => answer(index);
+    answersDiv.appendChild(btn);
   });
 }
 
-function guess(letter, btn) {
-  btn.disabled = true;
+function answer(index) {
+  score += quiz[current].points[index];
+  current++;
 
-  if (selectedWord.includes(letter)) {
-    guessed.push(letter);
+  if (current < quiz.length) {
+    loadQuestion();
   } else {
-    removePart();
-  }
-
-  updateWord();
-  checkGame();
-}
-
-function removePart() {
-  if (mistakes < bodyParts.length) {
-    document.querySelector("." + bodyParts[mistakes]).style.display = "none";
-    mistakes++;
+    showResult();
   }
 }
 
-function updateWord() {
-  const wordDiv = document.getElementById("word");
-  wordDiv.textContent = selectedWord
-    .split("")
-    .map(l => guessed.includes(l) ? l : "_")
-    .join(" ");
-}
+function showResult() {
+  document.getElementById("question").textContent = "";
+  document.getElementById("answers").innerHTML = "";
 
-function checkGame() {
-  if (mistakes === bodyParts.length) {
-    alert("Perdiste empieza de nuevo");
-    startGame();
+  let message = "";
+
+  if (score >= 9) {
+    message = "💎 Mejor amigo/a REAL";
+  } else if (score >= 6) {
+    message = "🙂 Buen amigo/a";
+  } else if (score >= 3) {
+    message = "😐 Amistad normal";
+  } else {
+    message = "😬 No es tan amigo/a...";
   }
 
-  if (selectedWord.split("").every(l => guessed.includes(l))) {
-    alert("Ganaste 🎉");
-    startGame();
-  }
+  document.getElementById("result").textContent =
+    message + " (" + score + " puntos)";
 }
 
-startGame();
+loadQuestion();
 </script>
 
 </body>
