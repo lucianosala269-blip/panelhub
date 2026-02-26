@@ -1,120 +1,148 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>IA PRO WEB</title>
-  <style>
-    body { background:#0f0f0f; color:white; font-family:Arial; }
-    #chat { max-width:700px; margin:auto; height:70vh; overflow-y:auto; }
-    .msg { padding:10px; margin:8px; border-radius:10px; }
-    .user { background:#1e1e1e; text-align:right; }
-    .ai { background:#333; }
-    input, button { padding:10px; margin:5px; }
-  </style>
+<meta charset="UTF-8">
+<title>Juego Pro 💰🔥</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial;
+  background: linear-gradient(180deg, #141e30, #243b55);
+}
+
+#player {
+  width: 70px;
+  height: 70px;
+  background: lime;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 15px;
+}
+
+.item {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  border-radius: 50%;
+}
+
+.coin {
+  background: gold;
+}
+
+.bomb {
+  background: red;
+}
+
+#score, #level {
+  position: absolute;
+  top: 10px;
+  font-size: 22px;
+  color: white;
+}
+
+#score { left: 10px; }
+#level { right: 10px; }
+</style>
 </head>
+
 <body>
 
-<h2 style="text-align:center;">IA Nivel Dios</h2>
+<div id="score">Puntos: 0</div>
+<div id="level">Nivel: 1</div>
+<div id="player"></div>
 
-<div id="chat"></div>
-
-<div style="text-align:center;">
-  <input id="input" placeholder="Escribe..." />
-  <button onclick="enviar()">Enviar</button>
-
-  <br>
-  <input type="file" id="pdfFile" />
-  <button onclick="leerPDF()">Cargar PDF</button>
-
-  <br>
-  <button onclick="imagen()">Generar Imagen</button>
-</div>
+<!-- sonidos -->
+<audio id="coinSound" src="https://assets.mixkit.co/sfx/preview/mixkit-coin-win-1998.mp3"></audio>
+<audio id="boomSound" src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-explosion-2759.mp3"></audio>
 
 <script>
-const API_KEY = "TU_API_KEY"; // ⚠️ NO seguro en producción
+let player = document.getElementById("player");
+let score = 0;
+let speed = 3;
+let level = 1;
 
-let memoria = JSON.parse(localStorage.getItem("chat")) || [];
-let pdfTexto = "";
+const coinSound = document.getElementById("coinSound");
+const boomSound = document.getElementById("boomSound");
 
-function guardar() {
-  localStorage.setItem("chat", JSON.stringify(memoria));
+// mover jugador
+document.addEventListener("mousemove", e => {
+  player.style.left = e.clientX - 35 + "px";
+});
+
+function createItem() {
+  let item = document.createElement("div");
+  item.classList.add("item");
+
+  let isBomb = Math.random() < 0.3 + level * 0.05;
+
+  if (isBomb) {
+    item.classList.add("bomb");
+  } else {
+    item.classList.add("coin");
+  }
+
+  item.style.left = Math.random() * window.innerWidth + "px";
+  document.body.appendChild(item);
+
+  let fall = setInterval(() => {
+    let top = parseInt(item.style.top || 0);
+    item.style.top = top + speed + "px";
+
+    let playerRect = player.getBoundingClientRect();
+    let itemRect = item.getBoundingClientRect();
+
+    if (
+      itemRect.bottom > playerRect.top &&
+      itemRect.left < playerRect.right &&
+      itemRect.right > playerRect.left
+    ) {
+      if (item.classList.contains("coin")) {
+        score++;
+        coinSound.play();
+      } else {
+        boomSound.play();
+        setTimeout(() => {
+          alert("💣 Perdiste! Nivel: " + level + " | Puntos: " + score);
+          location.reload();
+        }, 200);
+      }
+
+      document.getElementById("score").textContent = "Puntos: " + score;
+      item.remove();
+      clearInterval(fall);
+    }
+
+    if (top > window.innerHeight) {
+      item.remove();
+      clearInterval(fall);
+    }
+
+  }, 20);
 }
 
-function agregar(texto, clase) {
-  const div = document.createElement("div");
-  div.className = "msg " + clase;
-  div.innerText = texto;
-  document.getElementById("chat").appendChild(div);
+// niveles
+function updateLevel() {
+  let newLevel = Math.floor(score / 5) + 1;
+
+  if (newLevel !== level) {
+    level = newLevel;
+    speed += 1;
+    document.getElementById("level").textContent = "Nivel: " + level;
+
+    alert("🔥 Subiste a nivel " + level);
+  }
 }
 
-// 📄 Leer PDF (solo cliente)
-async function leerPDF() {
-  const file = document.getElementById("pdfFile").files[0];
-  const reader = new FileReader();
-
-  reader.onload = function() {
-    pdfTexto = reader.result.slice(0, 3000);
-    alert("PDF cargado (texto básico)");
-  };
-
-  reader.readAsText(file);
-}
-
-// 🤖 Chat
-async function enviar() {
-  const input = document.getElementById("input").value;
-  agregar(input, "user");
-
-  memoria.push(input);
-  guardar();
-
-  const contexto = pdfTexto ? "PDF: " + pdfTexto : "";
-
-  const res = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + API_KEY
-    },
-    body: JSON.stringify({
-      model: "gpt-4.1-mini",
-      input: contexto + "\n" + memoria.slice(-5).join("\n")
-    })
-  });
-
-  const data = await res.json();
-  const respuesta = data.output[0].content[0].text;
-
-  agregar(respuesta, "ai");
-
-  memoria.push(respuesta);
-  guardar();
-}
-
-// 🖼️ Imagen
-async function imagen() {
-  const prompt = prompt("Describe la imagen:");
-
-  const res = await fetch("https://api.openai.com/v1/images/generations", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + API_KEY
-    },
-    body: JSON.stringify({
-      model: "gpt-image-1",
-      prompt: prompt
-    })
-  });
-
-  const data = await res.json();
-
-  const img = document.createElement("img");
-  img.src = data.data[0].url;
-  img.style.width = "300px";
-
-  document.getElementById("chat").appendChild(img);
-}
+setInterval(() => {
+  createItem();
+  updateLevel();
+}, 900);
 </script>
 
 </body>
